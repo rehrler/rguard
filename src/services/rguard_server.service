@@ -1,0 +1,12 @@
+[Unit]
+Description=Rguard Server Service
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/home/roman/git/rguard
+ExecStart=/usr/bin/python3 /home/roman/git/rguard/src/server/start_server.py
+
+[Install]
+WantedBy=multi-user.target
