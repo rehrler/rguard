@@ -1,68 +1,282 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-    <title>Rguard: Air Surveillance</title>
-    <link rel="stylesheet" href='../static/style.css'/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-	body {
-	    text-align: center;
-	}
-	#g1,
-	#g2,
-	#g3 {
-	    width: 200px;
-	    height: 160px;
-	    display: inline-block;
-	    margin: 1em;
-	}
-   </style>
+    <meta charset="utf-8">
+
+    <title>rguard </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery-3.4.1.slim.min.js"></script>
+    <script src="../static/popper.min.js"></script>
+    <script src="../static/bootstrap.min.js"></script>
+
+
+    <!-- JQuery links  -->
+    <script src="../static/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="../static/highcharts.js"></script>
+    <script src="../static/highcharts-more.js"></script>
+    <script src="../static/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="../static/eon.js"></script>
+
+
 </head>
+
 <body>
-    <h1>Rguard: Air Surveillance</h1>
-    <div id="g1"></div>
-    <div id="g2"></div>
-    <div id="g3"></div>
-    <hr>
-    <img src="/plot/all" alt="Image Placeholder" width="99%">
-    <hr>
-    <h3> Last Sensors Reading: {{ time }} ==> <a href="/"class="button">REFRESH</a></h3>	
-    <hr>
-    <p> @2021 Developed by rehrler</p>
-    
-    <script src="../static/raphael-2.1.4.min.js"></script>
-    <script src="../static/justgage.js"></script>
-    <script>
-	var g1, g2, g3;
-	document.addEventListener("DOMContentLoaded", function(event) {
-	    g1 = new JustGage({
-		id: "g1",
-		value: {{temp}},
-		valueFontColor: "yellow",
-		min: -10,
-		max: 50,
-		title: "Temperature",
-		label: "Celcius"
-	});
-	    g2 = new JustGage({
-		id: "g2",
-		value: {{hum}},
-		valueFontColor: "yellow",
-		min: 0,
-		max: 100,
-		title: "Humidity",
-		label: "%"
-	});
-           g3 = new JustGage({
-	        id: "g3",
-			 value: {{co2}},
-			       valueFontColor: "yellow",
-			       min: 0,
-			       max: 1000,
-			       title: "CO2",
-			       label: "ppm"
-		       });
-      });
-    </script>
+
+<div class="jumbotron">
+    <h1 class="text-center text-black">rguard: Air Quality Control </h1>
+</div>
+<br>
+<br>
+
+
+<style>
+
+    .jumbotron {
+        widows: 150px;
+        height: 220px;
+        justify-content: center;
+    }
+
+    .row {
+        justify-content: center;
+    }
+
+
+</style>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-5 jumbotron p-2 mx-1">
+            <h1 class="sensor1"> Sensor : </h1>
+        </div>
+        <br>
+
+        <div class="col-5 jumbotron p-2 mx-1">
+            <h1 class="sensor2">Sensor :</h1>
+        </div>
+
+        <div class="col-5 jumbotron p-2 mx-1">
+            <h1 class="sensor3">Sensor :</h1>
+        </div>
+
+        <br>
+
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="container-fluid" id="data-co2">
+
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<div class="container-fluid">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="container-fluid" id="data-humidity">
+
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="container-fluid">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="container-fluid" id="data-temperature">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var chartTemperatue;
+    var chartHumidity;
+    var chartCo2;
+
+    function requestData() {
+        // Ajax call to get the Data from Flask
+        var requests = $.get('/data');
+
+        var tm = requests.done(function (result) {
+            // Temperature
+            var seriesTemperature = chartTemperatue.series[0],
+                shiftTemperature = seriesTemperature.data.length > 900;
+
+            // Humidity
+            var seriesHumidity = chartHumidity.series[0],
+                shiftHumidity = seriesTemperature.data.length > 900;
+
+            // co2
+            var seriesCo2 = chartCo2.series[0],
+                shiftCo2 = seriesCo2.data.length > 900;
+
+            // Add the Point
+            // Time Temperature\
+            var data1 = [];
+            data1.push(result[0]);
+            data1.push(result[1]);
+
+
+            // Add the Point
+            // Time Humidity
+            var data2 = [];
+            data2.push(result[0]);
+            data2.push(result[2]);
+
+
+            var data3 = [];
+            data3.push(result[0])
+            data3.push(result[3])
+
+            chartTemperatue.series[0].addPoint(data1, true, shiftTemperature);
+            chartHumidity.series[0].addPoint(data2, true, shiftHumidity);
+            chartCo2.series[0].addPoint(data3, true, shiftCo2);
+            $(".sensor1").text("");
+            $(".sensor1").text("Temperature : " + Math.round(data1[1]) + " deg Celsius");
+
+            $(".sensor2").text("");
+            $(".sensor2").text("Humidity : " + Math.round(data2[1])+ " %");
+
+            $(".sensor3").text("");
+            $(".sensor3").text("Co2 : " + Math.round(data3[1]) + " ppm");
+
+            // call it again after one second
+            setTimeout(requestData, 1000);
+
+        });
+    }
+
+    $(document).ready(function () {
+        // --------------Chart 1 ----------------------------
+        chartTemperatue = new Highcharts.Chart({
+            chart:
+                {
+                    renderTo: 'data-temperature',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                    }
+                },
+            title:
+                {
+                    text: 'Temperature'
+                },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150,
+                maxZoom: 900 * 1000
+            },
+            yAxis: {
+                minPadding: 0.2,
+                maxPadding: 0.2,
+                title: {
+                    text: 'Temperature [deg C]',
+                    margin: 80
+                }
+            },
+            series: [{
+                color: '#c23d23',
+                lineColor: '#000000',
+                name: 'Temperature',
+                data: []
+            }]
+        });
+        // --------------Chart 1 Ends - -----------------
+
+        chartHumidity = new Highcharts.Chart({
+            chart:
+                {
+                    renderTo: 'data-humidity',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                    }
+                },
+            title:
+                {
+                    text: 'Humidity'
+                },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150,
+                maxZoom: 900 * 1000
+            },
+            yAxis: {
+                minPadding: 0.2,
+                maxPadding: 0.2,
+                title: {
+                    text: 'Humidity [%]',
+                    margin: 80
+                }
+            },
+            series: [{
+                lineColor: '#000000',
+                color: '#1d82b8',
+                name: 'Humidity',
+                data: []
+            }]
+        });
+
+        chartCo2 = new Highcharts.Chart({
+            chart:
+                {
+                    renderTo: 'data-co2',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                    }
+                },
+            title:
+                {
+                    text: 'Co2'
+                },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150,
+                maxZoom: 900 * 1000
+            },
+            yAxis: {
+                minPadding: 0.2,
+                maxPadding: 0.2,
+                title: {
+                    text: 'Co2 concentration [ppm]',
+                    margin: 80
+                }
+            },
+            series: [{
+                lineColor: '#000000',
+                color: '#d4af37',
+                name: 'Co2',
+                data: []
+            }]
+        });
+
+    });
+</script>
+
+
 </body>
-</html
+
+
+</html>

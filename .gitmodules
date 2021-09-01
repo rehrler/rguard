@@ -1,0 +1,6 @@
+[submodule "3rdparty/rpi-i2c-timings"]
+	path = 3rdparty/rpi-i2c-timings
+	url = https://github.com/RequestForCoffee/rpi-i2c-timings
+[submodule "3rdparty/linux-wifi-hotspot"]
+	path = 3rdparty/linux-wifi-hotspot
+	url = https://github.com/lakinduakash/linux-wifi-hotspot
