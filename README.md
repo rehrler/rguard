@@ -3,8 +3,6 @@
 rguard is a *do it yourself* project with the aim to develop an opensource instruction for **building your own CO2
 Sensor**. All instructions are here available including some CAD and STL files of a housing for 3d printing.
 
-
-
 ## Installation
 
 ### Raspberry Pi
@@ -21,7 +19,7 @@ TX/SCL | GPIO 3 BCM 3 (SCL)
 RX/SDA | GPIO 2 BCM 2 (SDA)
 SEL | Ground
 
-Source: [https://pinout.xyz/pinout/i2c](https://pinout.xyz/pinout/i2c)
+[source](https://pinout.xyz/pinout/i2c)
 
 ### rguard
 
@@ -84,7 +82,8 @@ sudo cp rguard_sensor.service /etc/systemd/system/ && sudo systemctl enable rgua
 
 ### CAD and STL File for 3d Printer
 
-TODO
+- top plate [cad/rguard_topplate.stl](cad/rguard_topplate.stl)
+- base plate [cad/rguard_plate.stl](cad/rguard_plate.stl)
 
 ### Hardware
 
@@ -94,12 +93,10 @@ TODO
 
 ## OS
 
-- Rapberry Pi OS
-  Lite [https://www.raspberrypi.org/software/operating-systems/](https://www.raspberrypi.org/software/operating-systems/)
+- [Rapberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/)
 
 ## Credits
 
-- SCD30 Python Interface [https://github.com/RequestForCoffee/scd30](https://github.com/RequestForCoffee/scd30)
-- I2C timings [https://github.com/RequestForCoffee/rpi-i2c-timings](https://github.com/RequestForCoffee/rpi-i2c-timings)
-- Linux Wifi
-  Hotspot [https://github.com/lakinduakash/linux-wifi-hotspot](https://github.com/lakinduakash/linux-wifi-hotspot)
+- [SCD30 Python Interface](https://github.com/RequestForCoffee/scd30)
+- [I2C timings](https://github.com/RequestForCoffee/rpi-i2c-timings)
+- [Linux Wifi Hotspot](https://github.com/lakinduakash/linux-wifi-hotspot)
