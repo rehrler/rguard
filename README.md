@@ -59,12 +59,13 @@ sudo systemctl enable create_ap.service
 ```
 
 6. Adjust paths and user in [src/services/rguard_sensor.service](src/services/rguard_sensor.service)
-   and [src/services/rguard_server.service](src/services/rguard_server.service).
+   , [src/services/rguard_server.service](src/services/rguard_server.service)
+   and [src/services/rguard_led.service](src/services/rguard_led.service).
 
 ```text
 WorkingDirectory=<path to rguard directory>
 User=<your user>
-ExecStart=<path to python exec> <path to capture_data.py/start_server.py>
+ExecStart=<path to python exec> <path to capture_data.py/start_server.py/state_led.py>
 ```
 
 7. Add rguard services to systemctl
@@ -73,6 +74,7 @@ ExecStart=<path to python exec> <path to capture_data.py/start_server.py>
 cd ../../src/services/
 sudo cp rguard_server.service /etc/systemd/system/ && sudo systemctl enable rguard_server.service
 sudo cp rguard_sensor.service /etc/systemd/system/ && sudo systemctl enable rguard_sensor.service
+sudo cp rguard_led.service /etc/systemd/system/ && sudo systemctl enable rguard_led.service
 ```
 
 8. Reboot the raspberry pi, connect to the wifi with the given name and visit [10.0.0.1:5000](http://10.0.0.1:5000) and

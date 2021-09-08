@@ -1,5 +1,5 @@
 [Unit]
-Description=Rguard Server Service
+Description=Rguard LED Service
 After=multi-user.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=simple
 Restart=always
 WorkingDirectory=<path to rguard directory>
 User=<your user>
-ExecStart=<path to python exec> <path to start_server.py>
+ExecStart=<path to python exec> <path to state_led.py>
 
 [Install]
 WantedBy=multi-user.target

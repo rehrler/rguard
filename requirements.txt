@@ -3,3 +3,4 @@ seaborn
 pandas
 Flask
 scd30_i2c
+RPi.GPIO
