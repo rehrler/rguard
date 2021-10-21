@@ -8,7 +8,7 @@ MIDDLE_BOUND = 800.0
 
 B_LED = 11
 G_LED = 13
-R_LED = 22
+R_LED = 15
 
 
 def get_average_co2_min() -> float:

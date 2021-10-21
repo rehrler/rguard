@@ -80,6 +80,24 @@ sudo cp rguard_led.service /etc/systemd/system/ && sudo systemctl enable rguard_
 8. Reboot the raspberry pi, connect to the wifi with the given name and visit [10.0.0.1:5000](http://10.0.0.1:5000) and
    there you go!
 
+### Installation script
+
+1. Clone the repo
+```bash
+git clone https://github.com/rehrler/rguard.git --recursive
+```
+
+2. Enable i2c interface on raspberry in raspi-config
+```bash
+sudo raspi-config
+```
+
+3. Execute the installation script
+```bash
+cd ~/rguard
+sudo ./install.sh
+```
+
 ## Notes
 
 ### CAD and STL File for 3d Printer

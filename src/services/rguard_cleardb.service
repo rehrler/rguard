@@ -1,0 +1,12 @@
+[Unit]
+Description=delete db due to failing time
+Requires=sys-subsystem-net-devices-wlan0.device
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/pi/rguard
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/rguard/src/db/create_db.py
+
+[Install]
+WantedBy=multi-user.target

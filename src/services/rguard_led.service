@@ -5,9 +5,9 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=<path to rguard directory>
-User=<your user>
-ExecStart=<path to python exec> <path to state_led.py>
+WorkingDirectory=/home/pi/rguard
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/rguard/src/led/state_led.py
 
 [Install]
 WantedBy=multi-user.target

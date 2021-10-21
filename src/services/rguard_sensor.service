@@ -5,9 +5,9 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=<path to rguard directory>
-User=<your user>
-ExecStart=<path to python exec> <path to capture_data.py>
+WorkingDirectory=/home/pi/rguard
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/rguard/src/sensor/capture_data.py
 
 [Install]
 WantedBy=multi-user.target
