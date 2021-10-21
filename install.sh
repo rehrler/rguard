@@ -4,7 +4,7 @@
 echo "updating system..."
 sudo apt-get update && sudo apt-get upgrade -y
 echo "installing system requirements..."
-sudo apt-get install -y libgtk-3-dev build-essential gcc g++ pkg-config make hostapd python3-pip dnsmasq git vim
+sudo apt-get install -y libgtk-3-dev build-essential gcc g++ pkg-config make hostapd python3-pip dnsmasq vim
 
 # install pip requirements
 echo "installing python requirements..."

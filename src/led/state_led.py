@@ -19,8 +19,9 @@ def get_average_co2_min() -> float:
         co2 += row[3]
         nb_entries += 1
     conn.close()
-    co2 /= nb_entries
-    return co2
+    if nb_entries is not 0:
+        co2 /= nb_entries
+    return co2, nb_entries
 
 
 # GPIO configuration
@@ -35,20 +36,30 @@ GPIO.output(R_LED, GPIO.LOW)
 
 # show state
 while True:
-    current_co2 = get_average_co2_min()
+    current_co2, data_len = get_average_co2_min()
     # case too high
-    if current_co2 >= UPPER_BOUND:
+    if data_len > 15:
+        if current_co2 >= UPPER_BOUND:
+            GPIO.output(B_LED, GPIO.LOW)
+            GPIO.output(G_LED, GPIO.LOW)
+            GPIO.output(R_LED, GPIO.HIGH)
+        elif UPPER_BOUND > current_co2 >= MIDDLE_BOUND:
+            GPIO.output(B_LED, GPIO.HIGH)
+            GPIO.output(G_LED, GPIO.LOW)
+            GPIO.output(R_LED, GPIO.LOW)
+        else:
+            GPIO.output(B_LED, GPIO.LOW)
+            GPIO.output(G_LED, GPIO.HIGH)
+            GPIO.output(R_LED, GPIO.LOW)
+        time.sleep(15.0)
+    else:
         GPIO.output(B_LED, GPIO.LOW)
         GPIO.output(G_LED, GPIO.LOW)
         GPIO.output(R_LED, GPIO.HIGH)
-    elif UPPER_BOUND > current_co2 >= MIDDLE_BOUND:
-        GPIO.output(B_LED, GPIO.HIGH)
+        time.sleep(1.0)
+        GPIO.output(B_LED, GPIO.LOW)
         GPIO.output(G_LED, GPIO.LOW)
         GPIO.output(R_LED, GPIO.LOW)
-    else:
-        GPIO.output(B_LED, GPIO.LOW)
-        GPIO.output(G_LED, GPIO.HIGH)
-        GPIO.output(R_LED, GPIO.LOW)
-    time.sleep(15.0)
+        time.sleep(1.0)
 
 GPIO.cleanup()

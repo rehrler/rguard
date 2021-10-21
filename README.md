@@ -84,7 +84,7 @@ sudo cp rguard_led.service /etc/systemd/system/ && sudo systemctl enable rguard_
 
 1. Clone the repo
 ```bash
-git clone https://github.com/rehrler/rguard.git --recursive
+sudo apt-get install git && git clone https://github.com/rehrler/rguard.git --recursive
 ```
 
 2. Enable i2c interface on raspberry in raspi-config
